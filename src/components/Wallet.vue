@@ -1,76 +1,17 @@
 <template>
   <div class="wallet">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
+    <hr>
+    <h2>My Cards</h2>
+    <ul v-for="card in cards" :key="card.id">
       <li>
-        <a
-          href="https://vuejs.org"
-          target="_blank"
-        >
-          Core Docs
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://forum.vuejs.org"
-          target="_blank"
-        >
-          Forum
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://chat.vuejs.org"
-          target="_blank"
-        >
-          Community Chat
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://twitter.com/vuejs"
-          target="_blank"
-        >
-          Twitter
-        </a>
-      </li>
-      <br>
-      <li>
-        <a
-          href="http://vuejs-templates.github.io/webpack/"
-          target="_blank"
-        >
-          Docs for This Template
-        </a>
+        {{card}}
+        <button v-on:click="cards">Remove</button>
+        <button v-on:click="cards">Default</button>
       </li>
     </ul>
-    <h2>Ecosystem</h2>
+    <hr>
+    <h2>+ Add New Card</h2>
     <ul>
-      <li>
-        <a
-          href="http://router.vuejs.org/"
-          target="_blank"
-        >
-          vue-router
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vuex.vuejs.org/"
-          target="_blank"
-        >
-          vuex
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vue-loader.vuejs.org/"
-          target="_blank"
-        >
-          vue-loader
-        </a>
-      </li>
       <li>
         <a
           href="https://github.com/vuejs/awesome-vue"
@@ -88,7 +29,11 @@ export default {
   name: 'Wallet',
   data() {
     return {
-      msg: 'Welcome to Your Vue.js App',
+      cards: [
+        { id: '1', type: 'visa', isDefault: true, number: 1234567891254785, expDate: '10/2023' },
+        { id: '2', type: 'mastercard', isDefault: false, number: 1234567854254785, expDate: '06/2025' },
+        { id: '3', type: 'amex', isDefault: false, number: 1234567891256985, expDate: '05/2022' },
+      ],
     };
   },
 };
@@ -96,8 +41,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
+h2 {
   font-weight: normal;
+  text-align: left;
 }
 ul {
   list-style-type: none;
