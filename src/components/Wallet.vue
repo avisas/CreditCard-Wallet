@@ -5,8 +5,8 @@
     <ul v-for="card in cards" :key="card.id">
       <li>
         {{card}}
-        <button v-on:click="cards">Remove</button>
-        <button v-on:click="cards">Default</button>
+        <button :id="`rm-${card.id}`" @click="removeCard($event)">Remove</button>
+        <button :id="`sd-${card.id}`" @click="setDefault($event)">Default</button>
       </li>
     </ul>
     <hr>
@@ -35,6 +35,18 @@ export default {
         { id: '3', type: 'amex', isDefault: false, number: 1234567891256985, expDate: '05/2022' },
       ],
     };
+  },
+  methods: {
+    removeCard(event) {
+      const targetId = String(event.currentTarget.id).slice(3);
+      const indexInArray = this.cards.findIndex((card) => (card.id === targetId));
+      this.cards.splice(indexInArray, 1);
+      // console.log(`${indexInArray}, ${targetId}`);
+    },
+    setDefault(event) {
+      // const targetId = event.currentTarget.id;
+      // console.log(targetId);
+    },
   },
 };
 </script>
