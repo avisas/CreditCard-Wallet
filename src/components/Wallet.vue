@@ -21,6 +21,41 @@
         </a>
       </li>
     </ul>
+    <form class="form">
+      <div>
+        <label>Name on Card</label>
+        <div>
+          <input type="text" id="cardName">
+        </div>
+      </div>
+      <div>
+        <label>Credit/ Debit Card Number</label>
+        <div>
+          <input type="text" id="cardNumber">
+        </div>
+      </div>
+      <div>
+        <label>Exp. Month</label>
+        <div>
+          <input type="text" id="expMonth">
+        </div>
+      </div>
+      <div>
+        <label>Exp. Year</label>
+        <div>
+          <input type="text" id="expYear">
+        </div>
+      </div>
+      <div>
+        <label>Security Code</label>
+        <div>
+          <input type="text" id="securityCode">
+        </div>
+      </div>
+      <img>
+      <button type="submit">Add Card</button>
+
+    </form>
   </div>
 </template>
 
@@ -39,7 +74,7 @@ export default {
   methods: {
     removeCard(event) {
       const targetId = String(event.currentTarget.id).slice(3);
-      const indexInArray = this.cards.findIndex((card) => (card.id === targetId));
+      const indexInArray = this.cards.findIndex(card => (card.id === targetId));
       this.cards.splice(indexInArray, 1);
       // console.log(`${indexInArray}, ${targetId}`);
     },
