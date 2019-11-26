@@ -21,7 +21,7 @@
         </a>
       </li>
     </ul>
-    <form class="form">
+    <form>
       <div>
         <label>Name on Card</label>
         <div>
@@ -53,7 +53,7 @@
         </div>
       </div>
       <img>
-      <button type="submit">Add Card</button>
+      <button @click="addCard">Add Card</button>
 
     </form>
   </div>
@@ -65,23 +65,43 @@ export default {
   data() {
     return {
       cards: [
-        { id: '1', type: 'visa', isDefault: true, number: 1234567891254785, expDate: '10/2023' },
+        { id: '1', type: 'visa', isDefault: false, number: 1234567891254785, expDate: '10/2023' },
         { id: '2', type: 'mastercard', isDefault: false, number: 1234567854254785, expDate: '06/2025' },
-        { id: '3', type: 'amex', isDefault: false, number: 1234567891256985, expDate: '05/2022' },
+        { id: '3', type: 'amex', isDefault: true, number: 1234567891256985, expDate: '05/2022' },
+        { id: '4 ', type: 'diners', isDefault: false, number: 1234867891256985, expDate: '05/2026' },
+        { id: '5 ', type: 'club', isDefault: false, number: 1233867891256985, expDate: '05/2023' },
       ],
     };
   },
   methods: {
     removeCard(event) {
-      const targetId = String(event.currentTarget.id).slice(3);
-      const indexInArray = this.cards.findIndex(card => (card.id === targetId));
+      const selectedCardId = String(event.currentTarget.id).slice(3);
+      const indexInArray = this.cards.findIndex(card => (card.id === selectedCardId));
       this.cards.splice(indexInArray, 1);
-      // console.log(`${indexInArray}, ${targetId}`);
+      if (this.cards.length) {
+          const foundDefaultCard = this.cards.find(currentCard => currentCard.isDefault);
+          if (foundDefaultCard === undefined) {
+            this.cards[0].isDefault = true;
+        }
+      }
     },
     setDefault(event) {
-      // const targetId = event.currentTarget.id;
-      // console.log(targetId);
+      const selectedCardId = String(event.currentTarget.id).slice(3);
+      this.cards.forEach((card) => {
+        if (card.id === selectedCardId) {
+          card.isDefault = true;
+          const temporalObject = { ...card };
+          const indexInArray = this.cards.findIndex(currentCard => (currentCard.id === selectedCardId));
+          this.cards.splice(indexInArray, 1);
+          this.cards.unshift(temporalObject);
+        } else {
+          card.isDefault = false;
+        }
+      });
     },
+    addCard(event) {
+     
+    }
   },
 };
 </script>
@@ -102,5 +122,11 @@ li {
 }
 a {
   color: #42b983;
+}
+.add-card {
+  background-color: green;
+  border: none;
+  border-color: green;
+  color: white;
 }
 </style>
