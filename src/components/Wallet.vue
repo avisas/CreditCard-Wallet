@@ -21,40 +21,40 @@
         </a>
       </li>
     </ul>
-    <form>
+    <form @submit="checkForm" method="post">
       <div>
-        <label>Name on Card</label>
+        <label for="nameCard">Name on Card</label>
         <div>
-          <input type="text" id="cardName">
+          <input v-model="cardName" type="text" id="cardName">
+          <p>cardname: {{cardName}}</p>
         </div>
       </div>
       <div>
-        <label>Credit/ Debit Card Number</label>
+        <label for="cardNumber">Credit/ Debit Card Number</label>
         <div>
-          <input type="text" id="cardNumber">
+          <input v-model.number="cardNumber" type="number" id="cardNumber">
         </div>
       </div>
       <div>
-        <label>Exp. Month</label>
+        <label for="expMonth">Exp. Month</label>
         <div>
-          <input type="text" id="expMonth">
+          <input v-model="expMonth" type="text" id="expMonth">
         </div>
       </div>
       <div>
-        <label>Exp. Year</label>
+        <label for="expYear">Exp. Year</label>
         <div>
-          <input type="text" id="expYear">
+          <input v-model="expYear" type="number" id="expYear">
         </div>
       </div>
       <div>
-        <label>Security Code</label>
+        <label for="securityCode">Security Code</label>
         <div>
-          <input type="text" id="securityCode">
+          <input v-model.number="securityCode" type="number" id="securityCode">
         </div>
       </div>
       <img>
       <button @click="addCard">Add Card</button>
-
     </form>
   </div>
 </template>
@@ -71,6 +71,13 @@ export default {
         { id: '4 ', type: 'diners', isDefault: false, number: 1234867891256985, expDate: '05/2026' },
         { id: '5 ', type: 'club', isDefault: false, number: 1233867891256985, expDate: '05/2023' },
       ],
+      cardName: 'visa',
+      initData: {
+        cardNumber: null,
+        expMonth: null,
+        expYear: null,
+        securityCode: null,
+      },
     };
   },
   methods: {
@@ -79,9 +86,9 @@ export default {
       const indexInArray = this.cards.findIndex(card => (card.id === selectedCardId));
       this.cards.splice(indexInArray, 1);
       if (this.cards.length) {
-          const foundDefaultCard = this.cards.find(currentCard => currentCard.isDefault);
-          if (foundDefaultCard === undefined) {
-            this.cards[0].isDefault = true;
+        const foundDefaultCard = this.cards.find(currentCard => currentCard.isDefault);
+        if (foundDefaultCard === undefined) {
+          this.cards[0].isDefault = true;
         }
       }
     },
@@ -99,9 +106,8 @@ export default {
         }
       });
     },
-    addCard(event) {
-     
-    }
+    // addCard(event) {
+    // }
   },
 };
 </script>
@@ -122,11 +128,5 @@ li {
 }
 a {
   color: #42b983;
-}
-.add-card {
-  background-color: green;
-  border: none;
-  border-color: green;
-  color: white;
 }
 </style>
