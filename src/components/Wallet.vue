@@ -22,7 +22,7 @@
           <input v-model.lazy.number="expMonth" type="text" id="expMonth">
           <p>Expiration Month is: {{expMonth}}</p>
         <label for="expYear">Exp. Year</label>
-          <input v-model.lazy.number="expYear" type="number" id="expYear">
+          <input v-model.lazy.number="expYear" type="text" id="expYear">
           <p>Expiration number is: {{expYear}}</p>
         <label for="securityCode">Security Code</label>
           <input v-model.lazy.number="securityCode" type="number" id="securityCode">
@@ -34,23 +34,27 @@
 </template>
 
 <script>
+import db from './firebaseInit';
+
 export default {
   name: 'Wallet',
   data() {
     return {
-      cards: [
-        { id: '1', type: 'visa', cardName:'Carlos Perez', isDefault: false, number: 1234567891254785, expDate: '10/2023', secCode:'526' },
-        { id: '2', type: 'mastercard', cardName:'Julia marquez', isDefault: false, number: 1234567854254785, expDate: '06/2025', secCode:'821' },
-        { id: '3', type: 'amex',  cardName:'Sandra Villalobos', isDefault: true, number: 1234567891256985, expDate: '05/2022', secCode:'954' },
-        { id: '4', type: 'diners', cardName:'Arturo Escobar', isDefault: false, number: 1234867891256985, expDate: '05/2026', secCode:'176' },
-        { id: '5', type: 'club', cardName:'Maria Espinoza', isDefault: false, number: 1233867891256985, expDate: '05/2023', secCode:'347' },
-      ],
+      cards: [],
       cardName: '',
       cardNumber: '',
       expMonth: '',
       expYear: '',
       securityCode: '',
-    };
+    }
+  },
+  created() {
+    db.collection('cards').get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        console.log(doc.data());
+            this.cards.push(doc.data());
+      });
+    });
   },
   methods: {
     removeCard(event) {
@@ -79,7 +83,7 @@ export default {
       });
     },
     addCard() {
-      firebase.firestore().collection('cards').add({
+      db.collection('cards').add({
         type: '',
         cardName: '',
         cardNumber: '',
@@ -87,17 +91,6 @@ export default {
         expDate: '',
         securityCode: '',
       });
-      // const newCardObj = {
-
-      //   id: 6,
-      //   type: `${this.type}`,
-      //   cardName: `${this.cardName}`,
-      //   isDefault: false,
-      //   number: this.cardNumber,
-      //   expDate: `${this.expMonth}/${this.expYear}`,
-      //   securityCode: `${this.securityCode}`
-      // };
-      // this.cards.push(newCardObj);
     },
   },
 };

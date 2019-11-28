@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Wallet from '@/components/Wallet';
 import newCard from '@/components/newCard';
+import navbar from '@/components/navbar';
 
 Vue.use(Router);
 
@@ -16,6 +17,11 @@ export default new Router({
       path: '/newCard',
       name: 'new-card',
       component: newCard,
+    },
+    {
+      path: '/navbar',
+      name: 'nav-bar',
+      component: navbar,
     },
   ],
 });

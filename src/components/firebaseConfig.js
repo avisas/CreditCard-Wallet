@@ -1,5 +1,5 @@
 export default {
-    apiKey: 'AIzaSyAtylARmiL7tEBR95LkSfcI8dHQSM1YtT8',
+  apiKey: 'AIzaSyAtylARmiL7tEBR95LkSfcI8dHQSM1YtT8',
   authDomain: 'challenge-ivisa.firebaseapp.com',
   databaseURL: 'https://challenge-ivisa.firebaseio.com',
   projectId: 'challenge-ivisa',
