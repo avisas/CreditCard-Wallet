@@ -39,11 +39,11 @@ export default {
   data() {
     return {
       cards: [
-        { id: '1', type: 'visa', isDefault: false, number: 1234567891254785, expDate: '10/2023' },
-        { id: '2', type: 'mastercard', isDefault: false, number: 1234567854254785, expDate: '06/2025' },
-        { id: '3', type: 'amex', isDefault: true, number: 1234567891256985, expDate: '05/2022' },
-        { id: '4', type: 'diners', isDefault: false, number: 1234867891256985, expDate: '05/2026' },
-        { id: '5', type: 'club', isDefault: false, number: 1233867891256985, expDate: '05/2023' },
+        { id: '1', type: 'visa', cardName:'Visa', isDefault: false, number: 1234567891254785, expDate: '10/2023', secCode:526 },
+        { id: '2', type: 'mastercard', cardName:'Mastercard', isDefault: false, number: 1234567854254785, expDate: '06/2025', secCode:821 },
+        { id: '3', type: 'amex',  cardName:'Amex', isDefault: true, number: 1234567891256985, expDate: '05/2022', secCode:954 },
+        { id: '4', type: 'diners', cardName:'Dinners Club', isDefault: false, number: 1234867891256985, expDate: '05/2026', secCode:176 },
+        { id: '5', type: 'club', cardName:'Club', isDefault: false, number: 1233867891256985, expDate: '05/2023', secCode:347 },
       ],
       cardName: '',
       cardNumber: '',
@@ -81,10 +81,12 @@ export default {
     addCard() {
       const newCardObj = {
         id: 6,
-        type: `${this.cardName}`,
+        type: `${this.type}`,
+        cardName: `${this.cardName}`,
         isDefault: false,
         number: this.cardNumber,
         expDate: `${this.expMonth}/${this.expYear}`,
+        securityCode: `${this.securityCode}`
       };
       this.cards.push(newCardObj);
     },
