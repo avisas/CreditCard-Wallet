@@ -11,51 +11,25 @@
     </ul>
     <hr>
     <h2>+ Add New Card</h2>
-    <ul>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-        >
-          awesome-vue
-        </a>
-      </li>
-    </ul>
-    <form @submit="checkForm" method="post">
       <div>
         <label for="nameCard">Name on Card</label>
-        <div>
-          <input v-model="cardName" type="text" id="cardName">
-          <p>cardname: {{cardName}}</p>
-        </div>
-      </div>
-      <div>
+          <input v-model.lazy.trim="cardName" type="text">
+          <p>Name on card is: {{ cardName }}</p>
         <label for="cardNumber">Credit/ Debit Card Number</label>
-        <div>
-          <input v-model.number="cardNumber" type="number" id="cardNumber">
-        </div>
-      </div>
-      <div>
+          <input v-model.lazy.number="cardNumber" type="number" id="cardNumber">
+          <p>Card number is: {{cardNumber}}</p>
         <label for="expMonth">Exp. Month</label>
-        <div>
-          <input v-model="expMonth" type="text" id="expMonth">
-        </div>
-      </div>
-      <div>
+          <input v-model.lazy.number="expMonth" type="text" id="expMonth">
+          <p>Expiration Month is: {{expMonth}}</p>
         <label for="expYear">Exp. Year</label>
-        <div>
-          <input v-model="expYear" type="number" id="expYear">
-        </div>
-      </div>
-      <div>
+          <input v-model.lazy.number="expYear" type="number" id="expYear">
+          <p>Expiration number is: {{expYear}}</p>
         <label for="securityCode">Security Code</label>
-        <div>
-          <input v-model.number="securityCode" type="number" id="securityCode">
-        </div>
+          <input v-model.lazy.number="securityCode" type="number" id="securityCode">
+          <p>security code is: {{securityCode}}</p>
       </div>
       <img>
       <button @click="addCard">Add Card</button>
-    </form>
   </div>
 </template>
 
@@ -68,16 +42,14 @@ export default {
         { id: '1', type: 'visa', isDefault: false, number: 1234567891254785, expDate: '10/2023' },
         { id: '2', type: 'mastercard', isDefault: false, number: 1234567854254785, expDate: '06/2025' },
         { id: '3', type: 'amex', isDefault: true, number: 1234567891256985, expDate: '05/2022' },
-        { id: '4 ', type: 'diners', isDefault: false, number: 1234867891256985, expDate: '05/2026' },
-        { id: '5 ', type: 'club', isDefault: false, number: 1233867891256985, expDate: '05/2023' },
+        { id: '4', type: 'diners', isDefault: false, number: 1234867891256985, expDate: '05/2026' },
+        { id: '5', type: 'club', isDefault: false, number: 1233867891256985, expDate: '05/2023' },
       ],
-      cardName: 'visa',
-      initData: {
-        cardNumber: null,
-        expMonth: null,
-        expYear: null,
-        securityCode: null,
-      },
+      cardName: '',
+      cardNumber: '',
+      expMonth: '',
+      expYear: '',
+      securityCode: '',
     };
   },
   methods: {
@@ -106,8 +78,16 @@ export default {
         }
       });
     },
-    // addCard(event) {
-    // }
+    addCard() {
+      const newCardObj = {
+        id: 6,
+        type: `${this.cardName}`,
+        isDefault: false,
+        number: this.cardNumber,
+        expDate: `${this.expMonth}/${this.expYear}`,
+      };
+      this.cards.push(newCardObj);
+    },
   },
 };
 </script>

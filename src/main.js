@@ -19,3 +19,15 @@ new Vue({
   components: { App },
   template: '<App/>',
 });
+
+const firebaseConfig = {
+  apiKey: 'AIzaSyAtylARmiL7tEBR95LkSfcI8dHQSM1YtT8',
+  authDomain: 'challenge-ivisa.firebaseapp.com',
+  databaseURL: 'https://challenge-ivisa.firebaseio.com',
+  projectId: 'challenge-ivisa',
+  storageBucket: 'challenge-ivisa.appspot.com',
+  messagingSenderId: '633499607649',
+  appId: '1:633499607649:web:e4530465952910acb08020',
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
