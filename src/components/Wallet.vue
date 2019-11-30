@@ -6,29 +6,23 @@
       <li>
         {{card}}
         <button :id="`rm-${card.id}`" @click="removeCard($event)">Remove</button>
-        <button :id="`sd-${card.id}`" @click="setDefault($event)">Default</button>
+        <button :id="`sd-${card.id}`" @click="setDefault($event)">Set Default</button>
       </li>
     </ul>
     <hr>
     <h2>+ Add New Card</h2>
       <div>
-        <label for="nameCard">Name on Card</label>
-          <input v-model.lazy.trim="cardName" type="text">
-          <p>Name on card is: {{ cardName }}</p>
+        <label for="cardName">Name on Card</label>
+        <input v-model.lazy.trim="cardName">
         <label for="cardNumber">Credit/ Debit Card Number</label>
-          <input v-model.lazy.number="cardNumber" type="number" id="cardNumber">
-          <p>Card number is: {{cardNumber}}</p>
+        <input v-model.lazy.number="cardNumber">
         <label for="expMonth">Exp. Month</label>
-          <input v-model.lazy.number="expMonth" type="text" id="expMonth">
-          <p>Expiration Month is: {{expMonth}}</p>
+        <input v-model.lazy.number="expMonth">
         <label for="expYear">Exp. Year</label>
-          <input v-model.lazy.number="expYear" type="text" id="expYear">
-          <p>Expiration number is: {{expYear}}</p>
+        <input v-model.lazy.number="expYear">
         <label for="securityCode">Security Code</label>
-          <input v-model.lazy.number="securityCode" type="number" id="securityCode">
-          <p>security code is: {{securityCode}}</p>
+        <input v-model.lazy.number="secCode">
       </div>
-      <img>
       <button @click="addCard">Add Card</button>
   </div>
 </template>
@@ -45,26 +39,25 @@ export default {
       cardNumber: '',
       expMonth: '',
       expYear: '',
-      securityCode: '',
+      secCode: '',
     }
   },
   created() {
-    db.collection('cards').get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        console.log(doc.data());
-            this.cards.push(doc.data());
-      });
-    });
+    this.getCardsFromDB();    
   },
   methods: {
     removeCard(event) {
       const selectedCardId = String(event.currentTarget.id).slice(3);
       const indexInArray = this.cards.findIndex(card => (card.id === selectedCardId));
+      db.collection('cards').doc(selectedCardId).delete();      
       this.cards.splice(indexInArray, 1);
-      if (this.cards.length) {
+      if (this.cards.length) { // There must always be a default card
         const foundDefaultCard = this.cards.find(currentCard => currentCard.isDefault);
         if (foundDefaultCard === undefined) {
           this.cards[0].isDefault = true;
+          db.collection('cards').doc(this.cards[0].id).update({
+            isDefault: true,
+          });      
         }
       }
     },
@@ -73,25 +66,85 @@ export default {
       this.cards.forEach((card) => {
         if (card.id === selectedCardId) {
           card.isDefault = true;
-          const temporalObject = { ...card };
-          const indexInArray = this.cards.findIndex(currentCard => (currentCard.id === selectedCardId));
-          this.cards.splice(indexInArray, 1);
-          this.cards.unshift(temporalObject);
+          db.collection('cards').doc(card.id).update({
+            isDefault: true,
+          });
         } else {
           card.isDefault = false;
+          db.collection('cards').doc(card.id).update({
+            isDefault: false,
+          });
         }
       });
     },
     addCard() {
-      db.collection('cards').add({
-        type: '',
-        cardName: '',
-        cardNumber: '',
+      const newCreditCard = {
+        cardName: this.cardName,
+        cardNumber: this.cardNumber,
+        expMonth: this.expMonth,
+        expYear: this.expYear,
+        secCode: this.secCode,
+        type: this.detectCardType(this.cardNumber),
         isDefault: false,
-        expDate: '',
-        securityCode: '',
+        creationDate: this.getCreationDate(),
+      };
+      db.collection('cards').add(newCreditCard);
+      this.getCardsFromDB();
+      console.log(newCreditCard);
+      this.clearModelFields();
+    },
+    getCreationDate() {
+      const date = new Date().toLocaleDateString();
+      const time = new Date().toLocaleTimeString();  // get 24 hr format
+      const dataTime = `${date} ${time}`;
+      return dataTime;
+    },
+    clearModelFields() {
+      this.cardName = '';
+      this.cardNumber = '';
+      this.expMonth = '';
+      this.expYear = '';
+      this.secCode = '';
+    },
+    getCardsFromDB() {
+      this.cards = [];
+      db.collection('cards').get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        let cardInDB = {
+          id: doc.id,
+          ...doc.data(),
+        };
+        console.log(cardInDB);
+        this.cards.push(cardInDB);
+        });
       });
     },
+    // URL: https://stackoverflow.com/questions/5911236/identify-card-type-from-card-number
+    detectCardType(number) {
+      const re = {
+        visa: /^4/,
+        mastercard: /^(5[1-5][0-9]{14}|2(22[1-9][0-9]{12}|2[3-9][0-9]{13}|[3-6][0-9]{14}|7[0-1][0-9]{13}|720[0-9]{12}))$/,
+        amex: /^3[47]/,
+        discover: /^(6011|622(12[6-9]|1[3-9][0-9]|[2-8][0-9]{2}|9[0-1][0-9]|92[0-5]|64[4-9])|65)/,
+        diners: /^36/,
+      };
+      if(re.visa.test(number)) {
+        return 'VISA';
+      }
+      if(re.mastercard.test(number)) {
+        return 'MASTERCARD';
+      }
+      if(re.amex.test(number)) {
+        return 'AMEX';
+      }
+      if(re.discover.test(number)) {
+        return 'DISCOVER';
+      }
+      if(re.diners.test(number)) {
+        return 'DINERS';
+      }
+      return 'UNKNOWN';
+    }
   },
 };
 </script>
