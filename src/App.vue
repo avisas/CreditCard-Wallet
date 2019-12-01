@@ -7,12 +7,12 @@
 </template>
 
 <script>
-import navbar from './components/navbar';
+import Navbar from './components/Navbar';
 
 export default {
   name: 'App',
   components: {
-    navbar,
+    Navbar,
   },
 };
 </script>

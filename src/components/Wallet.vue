@@ -29,6 +29,7 @@
 
 <script>
 import db from './firebaseInit';
+// import undefined from 'firebase/empty-import';
 
 export default {
   name: 'Wallet',
@@ -65,17 +66,21 @@ export default {
       const selectedCardId = String(event.currentTarget.id).slice(3);
       this.cards.forEach((card) => {
         if (card.id === selectedCardId) {
-          card.isDefault = true;
+          this.setDefaultValueById(card.id, true);
           db.collection('cards').doc(card.id).update({
             isDefault: true,
           });
         } else {
-          card.isDefault = false;
+          this.setDefaultValueById(card.id, false);
           db.collection('cards').doc(card.id).update({
             isDefault: false,
           });
         }
       });
+    },
+    setDefaultValueById(cardId, isDefault) {
+      const foundCard = this.cards.find(currentCard => currentCard.id === cardId);
+      if (foundCard) foundCard.isDefault = isDefault;
     },
     addCard() {
       const newCreditCard = {
