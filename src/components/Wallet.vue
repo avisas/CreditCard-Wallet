@@ -40,16 +40,16 @@ export default {
       expMonth: '',
       expYear: '',
       secCode: '',
-    }
+    };
   },
   created() {
-    this.getCardsFromDB();    
+    this.getCardsFromDB();
   },
   methods: {
     removeCard(event) {
       const selectedCardId = String(event.currentTarget.id).slice(3);
       const indexInArray = this.cards.findIndex(card => (card.id === selectedCardId));
-      db.collection('cards').doc(selectedCardId).delete();      
+      db.collection('cards').doc(selectedCardId).delete();
       this.cards.splice(indexInArray, 1);
       if (this.cards.length) { // There must always be a default card
         const foundDefaultCard = this.cards.find(currentCard => currentCard.isDefault);
@@ -57,7 +57,7 @@ export default {
           this.cards[0].isDefault = true;
           db.collection('cards').doc(this.cards[0].id).update({
             isDefault: true,
-          });      
+          });
         }
       }
     },
@@ -90,12 +90,11 @@ export default {
       };
       db.collection('cards').add(newCreditCard);
       this.getCardsFromDB();
-      console.log(newCreditCard);
       this.clearModelFields();
     },
     getCreationDate() {
       const date = new Date().toLocaleDateString();
-      const time = new Date().toLocaleTimeString();  // get 24 hr format
+      const time = new Date().toLocaleTimeString('es-GB'); // get 24 hr format
       const dataTime = `${date} ${time}`;
       return dataTime;
     },
@@ -109,13 +108,12 @@ export default {
     getCardsFromDB() {
       this.cards = [];
       db.collection('cards').get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        let cardInDB = {
-          id: doc.id,
-          ...doc.data(),
-        };
-        console.log(cardInDB);
-        this.cards.push(cardInDB);
+        querySnapshot.forEach((doc) => {
+          const cardInDB = {
+            id: doc.id,
+            ...doc.data(),
+          };
+          this.cards.push(cardInDB);
         });
       });
     },
@@ -128,23 +126,23 @@ export default {
         discover: /^(6011|622(12[6-9]|1[3-9][0-9]|[2-8][0-9]{2}|9[0-1][0-9]|92[0-5]|64[4-9])|65)/,
         diners: /^36/,
       };
-      if(re.visa.test(number)) {
+      if (re.visa.test(number)) {
         return 'VISA';
       }
-      if(re.mastercard.test(number)) {
+      if (re.mastercard.test(number)) {
         return 'MASTERCARD';
       }
-      if(re.amex.test(number)) {
+      if (re.amex.test(number)) {
         return 'AMEX';
       }
-      if(re.discover.test(number)) {
+      if (re.discover.test(number)) {
         return 'DISCOVER';
       }
-      if(re.diners.test(number)) {
+      if (re.diners.test(number)) {
         return 'DINERS';
       }
       return 'UNKNOWN';
-    }
+    },
   },
 };
 </script>
