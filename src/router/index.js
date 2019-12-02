@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Wallet from '@/components/Wallet';
-import navbar from '@/components/Navbar';
+import navbar from '@/components/navbar';
 
 Vue.use(Router);
 
