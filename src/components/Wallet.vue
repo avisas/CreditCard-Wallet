@@ -54,7 +54,7 @@ export default {
       this.cards.splice(indexInArray, 1);
       if (this.cards.length) { // There must always be a default card
         const foundDefaultCard = this.cards.find(currentCard => currentCard.isDefault);
-        if (foundDefaultCard === undefined) {
+        if (!foundDefaultCard) {
           this.cards[0].isDefault = true;
           db.collection('cards').doc(this.cards[0].id).update({
             isDefault: true,
@@ -99,7 +99,7 @@ export default {
     },
     getCreationDate() {
       const date = new Date().toLocaleDateString();
-      const time = new Date().toLocaleTimeString('es-GB'); // get 24 hr format
+      const time = new Date().toLocaleTimeString('es-GB');
       const dataTime = `${date} ${time}`;
       return dataTime;
     },
