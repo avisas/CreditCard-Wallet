@@ -5,13 +5,29 @@
     <ul v-for="card in cards" :key="card.id">
       <li>
         {{card}}
-        <button :id="`rm-${card.id}`" @click="removeCard($event)">Remove</button>
-        <button :id="`sd-${card.id}`" @click="setDefault($event)">Set Default</button>
+        <b-button v-b-modal="`modal-rm-${card.id}`">Remove</b-button>
+        <b-modal :id="`modal-rm-${card.id}`" ok-title="Yes" @ok="removeCard">
+          <img src="../assets/remove-card-icon.svg">
+          <h4>Remove card</h4>
+          <p class="my-4">
+            Are you sure you want to remove from wallet?
+          </p>
+        </b-modal>
+
+        <b-button v-b-modal="`modal-sd-${card.id}`">Set Default</b-button>
+        <b-modal :id="`modal-sd-${card.id}`" ok-title="Yes" @ok="setDefault">
+          <img src="../assets/default-card-icon.svg">
+          <h4>Change default card</h4>
+          <p class="my-4">
+            This card will appear as a primary option for your payment.
+            Are your sure you want to set this card as default?
+          </p>
+        </b-modal>
       </li>
     </ul>
     <hr>
     <h2>+ Add New Card</h2>
-      <div>
+      <div v-if="true">
         <label for="cardName">Name on Card</label>
         <input v-model.lazy.trim="cardName">
         <label for="cardNumber">Credit/ Debit Card Number</label>
@@ -22,14 +38,13 @@
         <input v-model.lazy.number="expYear">
         <label for="securityCode">Security Code</label>
         <input v-model.lazy.number="secCode">
+        <button @click="addCard">Add Card</button>
       </div>
-      <button @click="addCard">Add Card</button>
   </div>
 </template>
 
 <script>
 import db from './firebaseInit';
-// import undefined from 'firebase/empty-import';
 
 export default {
   name: 'Wallet',
@@ -47,8 +62,8 @@ export default {
     this.getCardsFromDB();
   },
   methods: {
-    removeCard(event) {
-      const selectedCardId = String(event.currentTarget.id).slice(3);
+    removeCard(bvModalEvt) {
+      const selectedCardId = String(bvModalEvt.componentId).slice(9);
       const indexInArray = this.cards.findIndex(card => (card.id === selectedCardId));
       db.collection('cards').doc(selectedCardId).delete();
       this.cards.splice(indexInArray, 1);
@@ -62,8 +77,8 @@ export default {
         }
       }
     },
-    setDefault(event) {
-      const selectedCardId = String(event.currentTarget.id).slice(3);
+    setDefault(bvModalEvt) {
+      const selectedCardId = String(bvModalEvt.componentId).slice(9);
       this.cards.forEach((card) => {
         if (card.id === selectedCardId) {
           this.setDefaultValueById(card.id, true);
