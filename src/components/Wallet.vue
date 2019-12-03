@@ -32,6 +32,10 @@
     <div class="card m-4">
     <div class="card-header">+ Add New Card</div>
       <div v-if="true" class="card-body">
+        <img src="../assets/ok-green-ico.svg" style="width: 5%">
+        <label class="p-accept-cards"><strong>Accept All Major 
+          Debit/ Credit Cards</strong></label>
+        <img src="../assets/Payment-methods.jpg">
         <label for="cardName">Name on Card</label>
         <input v-model.lazy.trim="cardName">
         <label for="cardNumber">Credit/ Debit Card Number</label>
@@ -213,5 +217,8 @@ a {
   background-color: #52d03e;
   color: white;
   border-radius: 8px;
+}
+.p-accept-cards{
+  color: #52d03e;
 }
 </style>
