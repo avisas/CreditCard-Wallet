@@ -1,45 +1,69 @@
 <template>
   <div class="wallet">
-    <hr>
-    <h2>My Cards</h2>
-    <ul v-for="card in cards" :key="card.id">
-      <li>
+    <div class="card m-4">
+    <div class="card-header">My Cards</div>
+      <div class="card-body">
+        <ul v-for="card in cards" :key="card.id">
+          <li>
         {{card}}
-        <b-button v-b-modal="`modal-rm-${card.id}`">Remove</b-button>
-        <b-modal :id="`modal-rm-${card.id}`" ok-title="Yes" @ok="removeCard">
-          <img src="../assets/remove-card-icon.svg">
-          <h4>Remove card</h4>
-          <p class="my-4">
+          <b-button v-b-modal="`modal-rm-${card.id}`">Remove</b-button>
+          <b-modal :id="`modal-rm-${card.id}`" ok-title="Yes" @ok="removeCard">
+            <img src="../assets/remove-card-icon.svg">
+            <h4>Remove card</h4>
+            <p class="my-4">
             Are you sure you want to remove from wallet?
-          </p>
-        </b-modal>
+            </p>
+          </b-modal>
 
-        <b-button v-b-modal="`modal-sd-${card.id}`">Set Default</b-button>
-        <b-modal :id="`modal-sd-${card.id}`" ok-title="Yes" @ok="setDefault">
-          <img src="../assets/default-card-icon.svg">
-          <h4>Change default card</h4>
-          <p class="my-4">
+          <b-button v-b-modal="`modal-sd-${card.id}`">Set Default</b-button>
+          <b-modal :id="`modal-sd-${card.id}`" ok-title="Yes" @ok="setDefault">
+            <img src="../assets/default-card-icon.svg">
+            <h4>Change default card</h4>
+            <p class="my-4">
             This card will appear as a primary option for your payment.
             Are your sure you want to set this card as default?
-          </p>
-        </b-modal>
-      </li>
-    </ul>
-    <hr>
-    <h2>+ Add New Card</h2>
-      <div v-if="true">
+            </p>
+          </b-modal>
+            </li>
+          </ul>
+        </div>
+    </div>
+  
+    <div class="card m-4">
+    <div class="card-header">+ Add New Card</div>
+      <div v-if="true" class="card-body">
         <label for="cardName">Name on Card</label>
         <input v-model.lazy.trim="cardName">
         <label for="cardNumber">Credit/ Debit Card Number</label>
         <input v-model.lazy.number="cardNumber">
         <label for="expMonth">Exp. Month</label>
-        <input v-model.lazy.number="expMonth">
+        <select v-model.lazy.number="expMonth">
+          <option value="01">01</option>
+          <option value="02">02</option>
+          <option value="03">03</option>
+          <option value="04">04</option>
+          <option value="05">05</option>
+          <option value="06">06</option>
+          <option value="07">07</option>
+          <option value="08">08</option>
+          <option value="09">09</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+        </select>
         <label for="expYear">Exp. Year</label>
-        <input v-model.lazy.number="expYear">
+        <select v-model.lazy.number="expYear">
+          <option value="2020">2020</option>
+          <option value="2021">2021</option>          
+        </select>
         <label for="securityCode">Security Code</label>
         <input v-model.lazy.number="secCode">
-        <button @click="addCard">Add Card</button>
+        <div class="col-m-2">
+          <img src="../assets/Sectigo-trust-logo.png" alt="sectigo-logo" style="width: 10%">
+          <button @click="addCard" class="add-card-btn" style="width: 80%">Add Card</button>
+        </div>
       </div>
+    </div>
   </div>
 </template>
 
@@ -183,5 +207,11 @@ li {
 }
 a {
   color: #42b983;
+}
+.add-card-btn{
+  border: none;
+  background-color: #52d03e;
+  color: white;
+  border-radius: 8px;
 }
 </style>

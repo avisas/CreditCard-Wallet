@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <navbar />
-    <img src="./assets/ivisalogo.png">
+    <!-- <img src="./assets/ivisalogo.png"> -->
     <router-view/>
   </div>
 </template>
