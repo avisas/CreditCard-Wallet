@@ -1,6 +1,7 @@
 # codechallenge-ivisa
 
 > This is the description
+> vue init webpack "CodeChallenge-Ivisa"
 
 ## Build Setup
 

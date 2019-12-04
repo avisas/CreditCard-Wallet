@@ -8,7 +8,7 @@
         {{card}}
           <b-button v-b-modal="`modal-rm-${card.id}`">Remove</b-button>
           <b-modal :id="`modal-rm-${card.id}`" ok-title="Yes" @ok="removeCard">
-            <img src="../assets/remove-card-icon.svg">
+            <img src="../assets/remove-card-icon.svg" style="width: 25%">
             <h4>Remove card</h4>
             <p class="my-4">
             Are you sure you want to remove from wallet?
@@ -17,7 +17,7 @@
 
           <b-button v-b-modal="`modal-sd-${card.id}`">Set Default</b-button>
           <b-modal :id="`modal-sd-${card.id}`" ok-title="Yes" @ok="setDefault">
-            <img src="../assets/default-card-icon.svg">
+            <img src="../assets/default-card-icon.svg" style="width: 25%">
             <h4>Change default card</h4>
             <p class="my-4">
             This card will appear as a primary option for your payment.
@@ -40,29 +40,15 @@
         <input v-model.lazy.number="cardNumber" type="number" required>
         <label for="expMonth">Exp. Month</label>
         <select v-model.lazy.number="expMonth" required>
-          <option value="01">Jan</option>
-          <option value="02">Feb</option>
-          <option value="03">Mar</option>
-          <option value="04">Apr</option>
-          <option value="05">May</option>
-          <option value="06">Jun</option>
-          <option value="07">Jul</option>
-          <option value="08">Aug</option>
-          <option value="09">Sep</option>
-          <option value="10">Oct</option>
-          <option value="11">Nov</option>
-          <option value="12">Dec</option>
+          <option v-for="month in months" :value="month.val" :key="month.val">
+            {{month.desc}}
+          </option>
         </select>
         <label for="expYear">Exp. Year</label>
         <select v-model.lazy.number="expYear" required>
-          <option value="2021">2019</option>
-          <option value="2020">2020</option>
-          <option value="2021">2021</option>
-          <option value="2020">2022</option>
-          <option value="2021">2023</option>
-          <option value="2020">2024</option>
-          <option value="2021">2025</option>
-          <option value="2020">2026</option>
+          <option v-for="year in years" :value="year.val" :key="year.val">
+            {{year.desc}}
+          </option>
         </select>
         <label for="securityCode">Security Code</label>
         <input v-model.lazy.number="secCode" type="number" required>
@@ -83,6 +69,30 @@ export default {
   data() {
     return {
       cards: [],
+      months: [
+        { desc: 'Jan', val: '01' },
+        { desc: 'Feb', val: '02' },
+        { desc: 'Mar', val: '03' },
+        { desc: 'Apr', val: '04' },
+        { desc: 'May', val: '05' },
+        { desc: 'Jun', val: '06' },
+        { desc: 'Jul', val: '07' },
+        { desc: 'Aug', val: '08' },
+        { desc: 'Sep', val: '09' },
+        { desc: 'Oct', val: '10' },
+        { desc: 'Nov', val: '11' },
+        { desc: 'Dec', val: '12' },
+      ],
+      years: [
+        { desc: '2019', val: '2019' },
+        { desc: '2020', val: '2020' },
+        { desc: '2021', val: '2021' },
+        { desc: '2022', val: '2022' },
+        { desc: '2023', val: '2023' },
+        { desc: '2024', val: '2024' },
+        { desc: '2025', val: '2025' },
+        { desc: '2026', val: '2026' },
+      ],
       cardName: '',
       cardNumber: '',
       expMonth: '',
