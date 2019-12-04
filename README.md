@@ -13,6 +13,7 @@ npm install
 npm run dev
 
 # build for production with minification
+url: https://stackoverflow.com/questions/47615863/problems-deploying-to-github-pages-with-vue-project
 npm run build
 
 # build for production and view the bundle analyzer report
