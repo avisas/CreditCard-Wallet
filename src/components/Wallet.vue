@@ -28,40 +28,44 @@
           </ul>
         </div>
     </div>
-  
     <div class="card m-4">
     <div class="card-header">+ Add New Card</div>
       <div v-if="true" class="card-body">
         <img src="../assets/ok-green-ico.svg" style="width: 5%">
-        <label class="p-accept-cards"><strong>Accept All Major 
-          Debit/ Credit Cards</strong></label>
+        <label class="p-accept-cards"><strong>Accept All Major Debit/ Credit Cards</strong></label>
         <img src="../assets/Payment-methods.jpg">
         <label for="cardName">Name on Card</label>
-        <input v-model.lazy.trim="cardName">
+        <input v-model.lazy.trim="cardName" required>
         <label for="cardNumber">Credit/ Debit Card Number</label>
-        <input v-model.lazy.number="cardNumber">
+        <input v-model.lazy.number="cardNumber" type="number" required>
         <label for="expMonth">Exp. Month</label>
-        <select v-model.lazy.number="expMonth">
-          <option value="01">01</option>
-          <option value="02">02</option>
-          <option value="03">03</option>
-          <option value="04">04</option>
-          <option value="05">05</option>
-          <option value="06">06</option>
-          <option value="07">07</option>
-          <option value="08">08</option>
-          <option value="09">09</option>
-          <option value="10">10</option>
-          <option value="11">11</option>
-          <option value="12">12</option>
+        <select v-model.lazy.number="expMonth" required>
+          <option value="01">Jan</option>
+          <option value="02">Feb</option>
+          <option value="03">Mar</option>
+          <option value="04">Apr</option>
+          <option value="05">May</option>
+          <option value="06">Jun</option>
+          <option value="07">Jul</option>
+          <option value="08">Aug</option>
+          <option value="09">Sep</option>
+          <option value="10">Oct</option>
+          <option value="11">Nov</option>
+          <option value="12">Dec</option>
         </select>
         <label for="expYear">Exp. Year</label>
-        <select v-model.lazy.number="expYear">
+        <select v-model.lazy.number="expYear" required>
+          <option value="2021">2019</option>
           <option value="2020">2020</option>
-          <option value="2021">2021</option>          
+          <option value="2021">2021</option>
+          <option value="2020">2022</option>
+          <option value="2021">2023</option>
+          <option value="2020">2024</option>
+          <option value="2021">2025</option>
+          <option value="2020">2026</option>
         </select>
         <label for="securityCode">Security Code</label>
-        <input v-model.lazy.number="secCode">
+        <input v-model.lazy.number="secCode" type="number" required>
         <div class="col-m-2">
           <img src="../assets/Sectigo-trust-logo.png" alt="sectigo-logo" style="width: 10%">
           <button @click="addCard" class="add-card-btn" style="width: 80%">Add Card</button>
