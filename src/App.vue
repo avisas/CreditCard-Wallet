@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import Navbar from './components/Navbar';
+import Navbar from './components/navbar';
 
 export default {
   name: 'App',
@@ -22,7 +22,7 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  /* text-align: center; */
   color: #2c3e50;
   margin-top: 60px;
 }
