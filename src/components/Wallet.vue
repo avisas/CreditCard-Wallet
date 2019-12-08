@@ -5,19 +5,19 @@
       <ul class="cards-container">
         <li class="item-card" v-for="card in cards" :key="card.id">
         <!-- {{card}} -->
-        <img class="icon-check" src="../assets/Ok-green-ico.svg">
+        <img class="icon-check" src="../assets/ok-green-ico.svg">
         <div class="card-container">
           <div class="info-card-container">
               <img class="icon-type-card" src="../assets/visa-card-logo.svg">
               <div class="info-card">
                 <p >{{card.type}} {{card.cardNumber}}</p>
                 <p >Exp. Date: {{card.expMonth}}/{{card.expYear}}</p>
-              </div> 
+              </div>
           </div>
           <div class="btn-rm-sd">
                   <button v-b-modal="`modal-rm-${card.id}`">Remove</button>
                   <button v-b-modal="`modal-sd-${card.id}`">Set Default</button>
-          </div> 
+          </div>
         </div>
         <b-modal  :id="`modal-rm-${card.id}`" ok-title="Yes" @ok="removeCard">
           <img src="../assets/remove-card-icon.svg" style="width: 25%">
@@ -44,9 +44,10 @@
         <div class="major-cards">
           <div class="info-accept-cards">
           <img class="icon-check-show" src="../assets/ok-green-ico.svg">
-          <label class="p-accept-cards"><strong>We Accept All Major Debit/ Credit Cards</strong></label>
+          <label class="p-accept-cards">
+            <strong>We Accept All Major Debit/ Credit Cards</strong></label>
         </div>
-          <img class="img-all-cards" src="../assets/Payment-methods.jpg">
+          <img class="img-all-cards" src="../assets/payment-methods.jpg">
         </div>
 
        <div class="input-new-cards">
@@ -70,14 +71,12 @@
         </select></div>
         <div><label for="securityCode">Security Code</label>
         <input v-model.lazy.number="secCode" type="number" required></div>
-        
-
       <div class="add-card-container">
           <img src="../assets/Sectigo-trust-logo.png" alt="sectigo-logo">
           <button @click="addCard" class="add-card-btn">Add Card</button>
         </div>
 
-       </div>        
+       </div>
       </form>
     </div>
   </div>
@@ -227,15 +226,6 @@ export default {
       }
       return 'UNKNOWN';
     },
-    typeCard() {
-      const typeCard = card.type;
-      console.log(card.type);
-      
-      // return typeCard;
-      // if(){
-
-      // }
-    }
   },
 };
 </script>
@@ -325,38 +315,38 @@ max-width: 900px;
 
 }
 .btn-rm-sd{
-min-width: 200px;
-    display: flex;
-    justify-content: space-between;
+  min-width: 200px;
+  display: flex;
+  justify-content: space-between;
 }
 .btn-rm-sd button{
   background-color: initial;
-    color: #c2c2c2;
-    border: initial;
-    font-size: 12px;
-    text-decoration: underline;
-    font-weight: bold;
+  color: #c2c2c2;
+  border: initial;
+  font-size: 12px;
+  text-decoration: underline;
+  font-weight: bold;
 }
 .main-cards-more{
-      margin-top: 16px;
-    margin-bottom: 40px;
+  margin-top: 16px;
+  margin-bottom: 40px;
 }
 .major-cards{
-      display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 .input-new-cards{
   text-align: center;
 }
 .input-new-cards label{
   margin: 0;
-    width: 90%;
-    text-align: left;
-    font-size: 15px;
-    margin-bottom: 0px;
+  width: 90%;
+  text-align: left;
+  font-size: 15px;
+  margin-bottom: 0px;
 }
 
 .input-new-cards input,
@@ -370,15 +360,15 @@ min-width: 200px;
 
 .info-accept-cards{
   display: flex;
-    width: 200px;
-    font-size: 15px;
-    line-height: 18px;
+  width: 200px;
+  font-size: 15px;
+  line-height: 18px;
 }
 
 .icon-check-show{
   width: 38px;
-    height: 38px;
-    margin-right: 10px;
+  height: 38px;
+  margin-right: 10px;
 }
 
 .p-accept-cards{
@@ -388,25 +378,24 @@ min-width: 200px;
   width: 285px;
 }
 .add-card-container{
-      display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-        
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
 .add-card-container img{
   width: 100px;
-    margin: 5px 0 5px;
+  margin: 5px 0 5px;
 }
 .add-card-btn{
  border: none;
-    background-color: #52d03e;
-    color: white;
-    border-radius: 8px;
-    width: 90%;
-    padding: 6px 10px;
-    flex-grow: 1;
-    height: 37px;
+  background-color: #52d03e;
+  color: white;
+  border-radius: 8px;
+  width: 90%;
+  padding: 6px 10px;
+  flex-grow: 1;
+  height: 37px;
 }
 
 @media (min-width: 600px) {
@@ -418,9 +407,7 @@ min-width: 200px;
   .icon-type-card{
     margin: 0px 16px 0px 0px;
 }
-.info-card-container{
-
-}
+.info-card-container
 .btn-rm-sd{
   justify-content: flex-end;
   }
@@ -437,9 +424,7 @@ min-width: 200px;
     flex-wrap: wrap;
     text-align: initial;
 }
-.input-new-cards div:not(.add-card-container){
-  
-}
+.input-new-cards div:not(.add-card-container)
 .input-new-cards div:not(.add-card-container):nth-child(1),
 .input-new-cards div:not(.add-card-container):nth-child(2){
     width: 27%;
