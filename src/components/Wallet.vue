@@ -5,13 +5,13 @@
       <ul class="cards-container">
         <li class="item-card" v-for="card in cards" :key="card.id">
         <!-- {{card}} -->
-        <img class="icon-check" src="../assets/ok-green-ico.svg">
+        <img class="icon-check-my-card" :src="getCheckIconPath(card.isDefault)">
         <div class="card-container">
           <div class="info-card-container">
-              <img class="icon-type-card" src="../assets/visa-card-logo.svg">
+              <img class="icon-type-card" :src="getCardIconPath(card.type)">
               <div class="info-card">
-                <p >{{card.type}} {{card.cardNumber}}</p>
-                <p >Exp. Date: {{card.expMonth}}/{{card.expYear}}</p>
+                <p >{{card.type}} **** **** **** {{String(card.cardNumber).slice(-4)}}</p>
+                <p >Ex.Date: {{card.expMonth}}/{{card.expYear}}</p>
               </div>
           </div>
           <div class="btn-rm-sd">
@@ -43,7 +43,7 @@
       <form v-if="true" class="card-body">
         <div class="major-cards">
           <div class="info-accept-cards">
-          <img class="icon-check-show" src="../assets/ok-green-ico.svg">
+          <img class="icon-check-new-card" src="../assets/ok-green-ico.svg">
           <label class="p-accept-cards">
             <strong>We Accept All Major Debit/ Credit Cards</strong></label>
         </div>
@@ -72,7 +72,7 @@
         <div><label for="securityCode">Security Code</label>
         <input v-model.lazy.number="secCode" type="number" required></div>
       <div class="add-card-container">
-          <img src="../assets/Sectigo-trust-logo.png" alt="sectigo-logo">
+          <img src="../assets/sectigo-trust-logo.png" alt="sectigo-logo">
           <button @click="addCard" class="add-card-btn">Add Card</button>
         </div>
 
@@ -155,10 +155,19 @@ export default {
           });
         }
       });
+      this.reorderSetDefault();
     },
     setDefaultValueById(cardId, isDefault) {
       const foundCard = this.cards.find(currentCard => currentCard.id === cardId);
       if (foundCard) foundCard.isDefault = isDefault;
+    },
+    reorderSetDefault() {
+      const indexInArray = this.cards.findIndex(card => card.isDefault);
+      if (indexInArray > 0) {
+        const cardAtIndex = this.cards[indexInArray];
+        this.cards.splice(indexInArray, 1);
+        this.cards.unshift(cardAtIndex);
+      }
     },
     addCard() {
       const newCreditCard = {
@@ -199,6 +208,7 @@ export default {
           this.cards.push(cardInDB);
         });
       });
+      this.reorderSetDefault();
     },
     // URL: https://stackoverflow.com/questions/5911236/identify-card-type-from-card-number
     detectCardType(number) {
@@ -225,6 +235,32 @@ export default {
         return 'DINERS';
       }
       return 'UNKNOWN';
+    },
+    getCheckIconPath(isDefault) {
+      const path = isDefault ? 'ok-green-ico.svg' : 'ok-gray-ico.png';
+      const generateImagePath = require.context('../assets/', false, /\.png$|\.svg$/);
+      return generateImagePath(`./${path}`);
+    },
+    getCardIconPath(cardType) {
+      let path = '';
+      switch (cardType) {
+        case 'VISA':
+          path = 'visa-card-logo.svg';
+          break;
+        case 'AMEX':
+          path = 'amex-card-logo.svg';
+          break;
+        case 'MASTERCARD':
+          path = 'mastercard-card-logo.svg';
+          break;
+        case 'DISCOVER':
+          path = 'discover-card-logo.png';
+          break;
+        default:
+          path = 'unknown-card-logo.png';
+      }
+      const generateImagePath = require.context('../assets/', false, /\.png$|\.svg$/);
+      return generateImagePath(`./${path}`);
     },
   },
 };
@@ -270,7 +306,7 @@ max-width: 900px;
   width: 100%;
     padding: 15px 12px 0px;
 }
-.icon-check{
+.icon-check-my-card{
   width: 14px;
   margin-right: 18px;
 }
@@ -365,7 +401,7 @@ max-width: 900px;
   line-height: 18px;
 }
 
-.icon-check-show{
+.icon-check-new-card{
   width: 38px;
   height: 38px;
   margin-right: 10px;
@@ -452,12 +488,6 @@ max-width: 900px;
     width: 200px;
     font-size: 15px;
     line-height: 18px;
-}
-
-.icon-check-show{
-  width: 38px;
-    height: 38px;
-    margin-right: 10px;
 }
 
 .p-accept-cards{
