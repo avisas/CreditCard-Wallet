@@ -14,6 +14,7 @@ npm run dev
 
 # build for production with minification
 url: https://stackoverflow.com/questions/47615863/problems-deploying-to-github-pages-with-vue-project
+url for content security policy: http://qszhuan.github.io/technology/2015/08/12/add_csp_to_github_blog
 npm run build
 
 # build for production and view the bundle analyzer report
