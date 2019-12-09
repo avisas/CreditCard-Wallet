@@ -228,21 +228,21 @@ export default {
         diners: /^36/,
       };
       if (re.visa.test(number)) {
-        return 'VISA';
+        return 'Visa';
       }
       if (re.mastercard.test(number)) {
-        return 'MASTERCARD';
+        return 'Mastercard';
       }
       if (re.amex.test(number)) {
-        return 'AMEX';
+        return 'Amex';
       }
       if (re.discover.test(number)) {
-        return 'DISCOVER';
+        return 'Discover';
       }
       if (re.diners.test(number)) {
-        return 'DINERS';
+        return 'Diners';
       }
-      return 'UNKNOWN';
+      return 'Unknown';
     },
     getCheckIconPath(isDefault) {
       const path = isDefault ? 'ok-green-ico.svg' : 'ok-gray-ico.png';
@@ -252,16 +252,16 @@ export default {
     getCardIconPath(cardType) {
       let path = '';
       switch (cardType) {
-        case 'VISA':
+        case 'Visa':
           path = 'visa-card-logo.svg';
           break;
-        case 'AMEX':
+        case 'Amex':
           path = 'amex-card-logo.svg';
           break;
-        case 'MASTERCARD':
+        case 'Mastercard':
           path = 'mastercard-card-logo.svg';
           break;
-        case 'DISCOVER':
+        case 'Discover':
           path = 'discover-card-logo.png';
           break;
         default:
@@ -315,7 +315,7 @@ max-width: 900px;
     padding: 15px 12px 0px;
 }
 .icon-check-my-card{
-  width: 14px;
+  width: 18px;
   margin-right: 18px;
 }
 .item-card{
