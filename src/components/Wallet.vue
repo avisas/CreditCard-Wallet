@@ -16,11 +16,15 @@
           </div>
           <div class="btn-rm-sd">
                   <button v-b-modal="`modal-rm-${card.id}`">Remove</button>
-                  <button v-b-modal="`modal-sd-${card.id}`">Set Default</button>
+                  <button v-b-modal="`modal-sd-${card.id}`"
+                  :class="`${card.isDefault ? 'btn-blue' : 'btn-gray'}`">
+                    {{card.isDefault ? 'Default' : 'Set as default'}}
+                  </button>
           </div>
         </div>
         <b-modal  :id="`modal-rm-${card.id}`" ok-title="Yes" @ok="removeCard">
           <img src="../assets/remove-card-icon.svg" style="width: 25%">
+            <br><br>
             <h4>Remove card</h4>
             <p class="my-4">
             Are you sure you want to remove from wallet?
@@ -29,6 +33,7 @@
 
           <b-modal :id="`modal-sd-${card.id}`" ok-title="Yes" @ok="setDefault">
             <img src="../assets/default-card-icon.svg" style="width: 25%">
+            <br><br>
             <h4>Change default card</h4>
             <p class="my-4">
             This card will appear as a primary option for your payment.
@@ -39,8 +44,10 @@
         </ul>
     </div>
     <div class="main-cards main-cards-more">
-    <div class="card-hd">+ Add New Card</div>
-      <form v-if="true" class="card-body">
+    <div class="card-hd" v-on:click="newCardVisible = !newCardVisible" id="newCard">
+      + Add New Card
+    </div>
+      <form v-if="newCardVisible" class="card-body">
         <div class="major-cards">
           <div class="info-accept-cards">
           <img class="icon-check-new-card" src="../assets/ok-green-ico.svg">
@@ -119,6 +126,7 @@ export default {
       expMonth: '',
       expYear: '',
       secCode: '',
+      newCardVisible: false,
     };
   },
   created() {
@@ -350,7 +358,7 @@ max-width: 900px;
   font-size: 10px;
 
 }
-.btn-rm-sd{
+.btn-rm-sd {
   min-width: 200px;
   display: flex;
   justify-content: space-between;
@@ -361,6 +369,10 @@ max-width: 900px;
   border: initial;
   font-size: 12px;
   text-decoration: underline;
+  font-weight: bold;
+}
+.btn-rm-sd button.btn-blue{
+  color: #7C8ACA;
   font-weight: bold;
 }
 .main-cards-more{
@@ -408,7 +420,7 @@ max-width: 900px;
 }
 
 .p-accept-cards{
-  color: #52d03e;
+  color: #52D03E;
 }
 .img-all-cards{
   width: 285px;
@@ -425,13 +437,16 @@ max-width: 900px;
 }
 .add-card-btn{
  border: none;
-  background-color: #52d03e;
+  background-color: #52D03E;
   color: white;
   border-radius: 8px;
   width: 90%;
   padding: 6px 10px;
   flex-grow: 1;
   height: 37px;
+}
+#newCard{
+  cursor: pointer;
 }
 
 @media (min-width: 600px) {
@@ -442,15 +457,18 @@ max-width: 900px;
   }
   .icon-type-card{
     margin: 0px 16px 0px 0px;
-}
-.info-card-container
-.btn-rm-sd{
-  justify-content: flex-end;
+  }
+  .btn-rm-sd{
+      justify-content: flex-end;
+  }
+  .btn-rm-sd button.btn-blue{
+    color: #7C8ACA;
+    font-weight: bold;
   }
   .cards-container {
     width: 100%;
     padding: 15px 20px 0px;
-}
+  }
 
 .major-cards{
   justify-content: left;
@@ -460,7 +478,6 @@ max-width: 900px;
     flex-wrap: wrap;
     text-align: initial;
 }
-.input-new-cards div:not(.add-card-container)
 .input-new-cards div:not(.add-card-container):nth-child(1),
 .input-new-cards div:not(.add-card-container):nth-child(2){
     width: 27%;
@@ -489,6 +506,11 @@ max-width: 900px;
     font-size: 15px;
     line-height: 18px;
 }
+.icon-check-new-card{
+  width: 38px;
+    height: 38px;
+    margin-right: 10px;
+}
 
 .p-accept-cards{
   color: #52d03e;
@@ -506,11 +528,12 @@ max-width: 900px;
     margin: 5px 0 5px;
 }
 .add-card-btn{
-     width: 76%;
+    width: 76%;
     padding: 0px 12px;
     margin: 0 10px;
 }
+#newCard{
+  cursor: pointer;
 }
-
-
+}
 </style>
